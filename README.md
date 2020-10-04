@@ -1,0 +1,2 @@
+# hattrick
+Another esolang repository
