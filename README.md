@@ -7,7 +7,7 @@ An assignment-based esolang implementing a version of call/cc.
 * [Introduction]()
 * [Syntax]()
 * [Expressions and Operators]()
-* [Hat Paris]()
+* [Hat Pairs]()
 * [Examples]()
 * [Installing]()
 * [Credits]()
