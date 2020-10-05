@@ -7,7 +7,7 @@ An assignment-based esolang implementing a version of call/cc.
 * [Introduction]()
 * [Syntax]()
 * [Expressions and Operators]()
-* [CallCC (change name sometime)]()
+* [Hat Paris]()
 * [Examples]()
 * [Installing]()
 * [Credits]()
@@ -24,7 +24,7 @@ OR
 => [<variable name A>|<variable name B>]
 ```
 
-The first type of line moves values around, and the second type makes [CallCC pairs](). Hat Trick has **three data types**, being the number, the string, and the boolean:
+The first type of line moves values around, and the second type makes [hat pairs](). Hat Trick has **three data types**, being the number, the string, and the boolean:
 ```
 Number: 10
 Number: -10
