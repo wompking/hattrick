@@ -306,7 +306,7 @@ while pointer < len(programgrid):
 		hat_present[L[0]] = L[1]
 		present_hat[L[1]] = L[0]
 		variables[L[0]] = None
-		variables[L[1]] = ""
+		variables[L[1]] = None
 	else:
 		valWrite(line[1],value)
 	pointer += 1
