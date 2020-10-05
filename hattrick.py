@@ -19,7 +19,7 @@ OPERATIONSLENGTH = [int(a) for a in "2 2 2 2 2 2 3 2 2 2  2  1 2  2  1   2      
 programsplit = [b for b in [a for a in program.split("\n") if a] if b[0] is not "#"]
 programgrid = [a.split("=>") for a in programsplit]
 programgrid = [[b.strip() for b in a] for a in programgrid]
-#print(programgrid)
+print(programgrid)
 
 variables = {}
 hat_present = {}
@@ -28,15 +28,26 @@ reads = {}
 pointer = 0
 
 def isnum(s):
-	return len(re.findall(r"^((-?\d+\.?\d+)|(-?\d*\.?\d+))$", s)) == 1
-def iszero(s):
-	return len(re.findall(r"^(-?0+\.?0+)$", s)) == 1
+	return isinstance(s, int) or isinstance(s, float) 
 def isstr(s):
-	return len(re.findall(r"(^\"([^\"]|\\\")*?\"$)|(^'([^']|\\')*?'$)", s)) == 1
+	return isinstance(s, str)
 def isbool(s):
-	return len(re.findall(r"^True$|^False$", s)) == 1
+	return isinstance(s, bool)
 def isany(s):
 	return isnum(s) or isstr(s) or isbool(s)
+
+def strisnum(s):
+	return len(re.findall(r"^((-?\d+\.?\d+)|(-?\d*\.?\d+))$", s)) == 1
+def striszero(s):
+	return len(re.findall(r"^(-?0+\.?0+)$", s)) == 1
+def strisstr(s):
+	return len(re.findall(r"(^\"([^\"]|\\\")*?\"$)|(^'([^']|\\')*?'$)", s)) == 1
+def strisbool(s):
+	return len(re.findall(r"^True$|^False$", s)) == 1
+def strisany(s):
+	return strisnum(s) or strisstr(s) or strisbool(s)
+
+
 def getVal(g):
 	global variables
 	global hat_present
@@ -91,14 +102,6 @@ def parseExpression(s):
 	#print(L)
 	return L
 
-def stripstring(s,alll=False):
-	if isnum(s) or isbool(s):
-		return s
-	if alll:
-		return s.strip("\"'")
-	else:
-		return '"'+stripstring(s,True)+'"'
-
 def evalExpression(tree):
 	global variables
 	global hat_present
@@ -115,12 +118,14 @@ def evalExpression(tree):
 				return input("> ")
 			else:
 				return tree
-		elif isany(tree):
-			#print("ANY")
-			return tree
+		elif tree in variables.keys():
+			return getVal(tree)
 		else:
-			v = getVal(tree)
-			return str(v)
+			if strisany(tree):
+				return eval(tree)
+			else:
+				sys.exit(tree+" IS NOT A VALID DATA TYPE")
+			return tree
 		return tree
 	elif len(tree) == 1:
 		return evalExpression(tree[0])
@@ -129,120 +134,123 @@ def evalExpression(tree):
 		#print(L)
 		valOut = None
 		if L[-1] == "+":
-			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) + eval(L[1]))
-			elif isstr(L[0]) and isstr(L[1]):
-				return '"' + eval(L[0]) + eval(L[1]) + '"'
+			if isnum(L[0]) and isnum(L[1]) or isstr(L[0]) and isstr(L[1]):
+				return L[0] + L[1]
 			elif isbool(L[0]) and isbool(L[1]):
-				return str(eval(L[0]) or eval(L[1]))
+				return L[0] or L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR +")
 		elif L[-1] == "-":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) - eval(L[1]))
+				return L[0] - L[1]
 			elif isbool(L[0]) and isbool(L[1]):
-				return str(eval(L[0]) or not eval(L[1]))
+				return L[0] and not L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR -")
 		elif L[-1] == "*":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) * eval(L[1]))
+				return L[0] * L[1]
 			elif isstr(L[0]) and isnum(L[1]):
-				return '"' + eval(L[0]) * eval(L[1]) + '"'
+				return L[0] * L[1]
 			elif isbool(L[0]) and isbool(L[1]):
-				return str(eval(L[0]) and eval(L[1]))
+				return L[0] and L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR *")
 		elif L[-1] == "/":
 			if isnum(L[0]) and isnum(L[1]):
 				if iszero(L[0]) and iszero(L[1]):
-					return '"INDETERMINATE"'
+					return "INDETERMINATE"
 				elif iszero(L[1]):
-					return '"UNDEFINED"'
+					return "UNDEFINED"
 				else:
-					return str(eval(L[0]) / eval(L[1]))
+					return L[0] / L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR /")
 		elif L[-1] == "%":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) % eval(L[1]))
+				return L[0] % L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR %")
 		elif L[-1] == "^":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) ** eval(L[1]))
+				return L[0] ** L[1]
 			elif isbool(L[0]) and isbool(L[1]):
-				return str(eval(L[0]) ^ eval(L[1]))
+				return L[0] ^ L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR ^")
 		elif L[-1] == "?":
 			if isbool(L[2]):
-				return L[0] if eval(L[2]) else L[1]
+				return L[0] if L[2] else L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR ?")
 		elif L[-1] == ">":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) > eval(L[1]))
+				return L[0] > L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR >")
 		elif L[-1] == "<":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) < eval(L[1]))
+				return L[0] < L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR <")
 		elif L[-1] == "==":
-			return str(eval(L[0]) == eval(L[1]))
+			return L[0] == L[1]
 		elif L[-1] == "<=":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) <= eval(L[1]))
+				return L[0] <= L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR <=")
 		elif L[-1] == ">=":
 			if isnum(L[0]) and isnum(L[1]):
-				return str(eval(L[0]) >= eval(L[1]))
+				return L[0] >= L[1]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR >=")
 		elif L[-1] == "!=":
-			return str(eval(L[0]) != eval(L[1]))
+			return L[0] != L[1]
 		elif L[-1] == "!":
 			if isbool(L[0]):
-				return str(not eval(L[0]))
+				return not L[0]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPE FOR OPERATOR !")
 		elif L[-1] == "abs":
 			if isnum(L[0]):
-				return str(abs(eval(L[0])))
+				return abs(L[0])
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPE FOR OPERATOR abs")
 		elif L[-1] == "coerce":
 			if isbool(L[1]):
-				return str(True if eval(L[0]) else False)
+				return True if L[0] else False
 			elif isstr(L[1]):
-				return stripstring('"' + str(eval(L[0])) + '"')
+				return str(L[0])
 			elif isnum(L[1]):
 				if isbool(L[0]):
-					return str(0 if eval(L[0]) else 1)
+					return 0 if L[0] else 1
 				elif isstr(L[0]):
-					if isnum(stripstring(L[0],True)):
-						return str(eval(stripstring(L[0],True)))
-					return stripstring('"' + str(eval(L[0])) + '"')
+					try:
+						test = eval(L[0])
+					except SyntaxError:
+						return L[0]
+					if isnum(test):
+						return test
+					else:
+						return L[0]
 				elif isnum(L[0]):
 					return L[0]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR coerce")
 		elif L[-1] == "find":
 			if isstr(L[0]) and isstr(L[1]):
-				return str(eval(L[0]).find(eval(L[1])))
+				return L[0].find(L[1])
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR find")
 		elif L[-1] == "slice":
 			if isnum(L[0]) and isnum(L[1]) and isstr(L[2]):
-				return stripstring('"' + eval(L[2])[eval(L[0]):eval(L[1])] + '"')
+				return L[2][L[0]:L[1]]
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR slice")
 		elif L[-1] == "len":
 			if isstr(L[0]):
-				return str(len(eval(L[0])))
+				return len(L[0])
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR len")
 
@@ -287,9 +295,9 @@ while pointer < len(programgrid):
 	if line[0] == '':
 		pass
 	else:
-		value = stripstring(evalExpression(parseExpression(line[0])))
+		value = evalExpression(parseExpression(line[0]))
 	if line[1] == "stdout":
-		print(stripstring(value,True))
+		print(value)
 	elif line[1] == "stdin":
 		sys.exit("CANNOT WRITE TO STDIN")
 	elif len(re.findall(r"^\[[^|]+?\|[^|]+?\]$", line[1])) == 1 and value == None:
