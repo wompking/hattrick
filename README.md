@@ -79,3 +79,21 @@ Following is a table of operators in Hat Trick:
 | `coerce` | 2 | Coerces the type of `A` to the type of `B`; this includes evaluating numbers, checking if a value is truthy/falsy, and getting string representations. |
 | `find` | 2 | Python `A.find(B)` for strings, undefined otherwise. |
 | `slice` | 3 | Python `C[A:B]` for strings, undefined otherwise. |
+
+## Hat Pairs
+Hat pairs are the defining feature of Hat Trick; they allow for time travel and loops. The syntax to create a hat pair is:
+
+```
+=> [<entrance hat name>|<exit hat name>]
+```
+
+When a value is read from the exit hat, the Hat Trick interpreter stores its internal state at that moment. When a value is then written to the entrance hat, the interpreter checks if the value most recently retrieved from the exit hat was the same as the value written to the entrance hat. If so, execution continues as normal. If not, the program rewinds back to the time the exit hat was read from, changes the value read from the exit hat to whatever was put in the entrance hat, and continues from there. For example:
+
+```
+=> [ent|ext]
+2 => ext
+ext => stdout
+3 => ent
+```
+
+would print `2`, and then `3`. Hopefully this is explanatory enough.
