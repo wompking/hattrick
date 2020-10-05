@@ -66,7 +66,7 @@ The following is a table of operators in Hat Trick. Any operator will error if c
 | Operator | Arity | Function |
 |----------|-------|----------|
 | `+` | 2 | Performs addition between numbers, concatenation between strings, and logical `A OR B` between booleans. |
-| `-` | 2 | Performs subtraction between numbers, is undefined for strings, and logical `A OR NOT B` between booleans. |
+| `-` | 2 | Performs subtraction between numbers, is undefined for strings, and logical `A AND NOT B` between booleans. |
 | `*` | 2 | Performs multiplication between numbers, is undefined for strings, and logical `A AND B` between booleans. Additionally, `string number *` returns `string` repeated `number` times, like in Python. |
 | `/` | 2 | Performs divison between numbers, and is undefined otherwise. If hitting `0/0` or `val/0` respectively (where `val` is nonzero), the outputs will be `"INDETERMINATE"` and `"UNDEFINED"` respectively. |
 | `abs` | 1 | Absolute value of numbers. Undefined otherwise. |
