@@ -1,0 +1,9 @@
+#Enters an infinite loop where in each step it asks for input from the user, disregards the input, and then accumulates a counter
+#The loop cannot exit, and the counter starts with 0
+
+=> [hat|present]
+0 => present
+present => val
+stdin => null
+val => stdout
+val 1 + => hat
