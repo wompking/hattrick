@@ -79,6 +79,7 @@ The following is a table of operators in Hat Trick. Any operator will error if c
 | `coerce` | 2 | Coerces the type of `A` to the type of `B`; this includes evaluating numbers, checking if a value is truthy/falsy, and getting string representations. |
 | `find` | 2 | Python `A.find(B)` for strings, undefined otherwise. |
 | `slice` | 3 | Python `C[A:B]` for strings, undefined otherwise. |
+| `len` | 1 | Gets length of strings, undefined otherwise. |
 | `stdin` | 0 | Gets input from the user. |
 
 ## Hat Pairs
