@@ -13,8 +13,8 @@ if len(sys.argv) > 2:
 
 program = open(sys.argv[1]).read();
 
-OPERATIONS                        = "+ - * / % ^ ? > < == != ! >= <= abs coerce find slice".split(" ")
-OPERATIONSLENGTH = [int(a) for a in "2 2 2 2 2 2 3 2 2 2  2  1 2  2  1   2      2    3".split(" ") if a]
+OPERATIONS                        = "+ - * / % ^ ? > < == != ! >= <= abs coerce find slice stdin len".split(" ")
+OPERATIONSLENGTH = [int(a) for a in "2 2 2 2 2 2 3 2 2 2  2  1 2  2  1   2      2    3     0     1".split(" ") if a]
 
 programsplit = [b for b in [a for a in program.split("\n") if a] if b[0] is not "#"]
 programgrid = [a.split("=>") for a in programsplit]
@@ -45,9 +45,7 @@ def getVal(g):
 	global pointer
 	global OPERATIONS
 	global OPERATIONSLENGTH
-	if g == "stdin":
-		return input("> ")
-	elif g == "stdout":
+	if g == "stdout":
 		sys.exit("CANNOT INPUT FROM STDOUT")
 	elif g not in variables.keys():
 		sys.exit("UNKNOWN REFERENCE")
@@ -113,7 +111,10 @@ def evalExpression(tree):
 	if not isinstance(tree, list):
 		if tree in OPERATIONS:
 			#print("OPS")
-			return tree
+			if tree == "stdin":
+				return input("> ")
+			else:
+				return tree
 		elif isany(tree):
 			#print("ANY")
 			return tree
@@ -239,6 +240,11 @@ def evalExpression(tree):
 				return stripstring('"' + eval(L[2])[eval(L[0]):eval(L[1])] + '"')
 			else:
 				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR slice")
+		elif L[-1] == "len":
+			if isstr(L[0]):
+				return str(len(eval(L[0])))
+			else:
+				sys.exit("ERROR EVALUATING EXPRESSION "+str(L)+" : WRONG TYPES FOR OPERATOR len")
 
 def valWrite(w,v):
 	global variables
