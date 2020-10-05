@@ -21,7 +21,7 @@ OR
 => [<variable name A>|<variable name B>]
 ```
 
-The first type of line moves values around, and the second type makes [hat pairs](https://github.com/wompking/hattrick/blob/main/README.md#hat-pairs). Hat Trick has **three data types**, being the number, the string, and the boolean:
+The first type of line moves values around, and the second type makes [hat pairs](https://github.com/wompking/hattrick/blob/main/README.md#hat-pairs). Hat Trick has **four data types**, being the number, the string, the boolean, and null:
 ```
 Number: 10
 Number: -10
@@ -36,6 +36,9 @@ String: 'yay,\' fixed now'
 
 Boolean: True
 Boolean: False
+
+Null:
+#yes there's literally just nothing there
 ```
 
 These can be stored inside variables, which are created when written to. Two standard variables are `stdin` and `stdout`, which should be self-explanatory.
@@ -58,7 +61,7 @@ would print `5` to console. Writing
 
 would print `Returning with: ` and then whatever you input the program.
 
-Following is a table of operators in Hat Trick:
+The following is a table of operators in Hat Trick. Any operator will error if called on null.
 
 | Operator | Arity | Function |
 |----------|-------|----------|
@@ -93,4 +96,7 @@ ext => stdout
 3 => ent
 ```
 
-would print `2`, and then `3`. Hopefully this is explanatory enough.
+would print `2`, and then `3`.
+
+Writing to the exit of a hat pair works as expected; the value inside the exit simply changes. When a value is read from the exit hat without anything being put into the entrance hat, null is produced.
+
