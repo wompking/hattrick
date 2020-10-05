@@ -41,7 +41,7 @@ Null:
 #yes there's literally just nothing there
 ```
 
-These can be stored inside variables, which are created when written to. Two standard variables are `stdin` and `stdout`, which should be self-explanatory.
+These can be stored inside variables, which are created when written to. The only standard variable is `stdout`, which should be self-explanatory.
 
 Lines of code in Hat Trick that follow the first format are for computing/copying things. A very simple cat progam would be:
 
@@ -79,6 +79,7 @@ The following is a table of operators in Hat Trick. Any operator will error if c
 | `coerce` | 2 | Coerces the type of `A` to the type of `B`; this includes evaluating numbers, checking if a value is truthy/falsy, and getting string representations. |
 | `find` | 2 | Python `A.find(B)` for strings, undefined otherwise. |
 | `slice` | 3 | Python `C[A:B]` for strings, undefined otherwise. |
+| `stdin` | 0 | Gets input from the user. |
 
 ## Hat Pairs
 Hat pairs are the defining feature of Hat Trick; they allow for time travel and loops. The syntax to create a hat pair is:
