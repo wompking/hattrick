@@ -4,11 +4,10 @@ An assignment-based esolang implementing a version of call/cc.
 
 ## Table Of Contents
 
-* [Introduction]()
-* [Syntax]()
-* [Expressions and Operators]()
-* [Hat Pairs]()
-* [Examples]()
+* [Introduction](https://github.com/wompking/hattrick/blob/main/README.md#introduction)
+* [Syntax](https://github.com/wompking/hattrick/blob/main/README.md#syntax)
+* [Expressions and Operators](https://github.com/wompking/hattrick/blob/main/README.md#expressions-and-operators)
+* [Hat Pairs](https://github.com/wompking/hattrick/blob/main/README.md#hat-pairs)
 * [Installing]()
 * [Credits]()
 
@@ -24,7 +23,7 @@ OR
 => [<variable name A>|<variable name B>]
 ```
 
-The first type of line moves values around, and the second type makes [hat pairs](). Hat Trick has **three data types**, being the number, the string, and the boolean:
+The first type of line moves values around, and the second type makes [hat pairs](https://github.com/wompking/hattrick/blob/main/README.md#hat-pairs). Hat Trick has **three data types**, being the number, the string, and the boolean:
 ```
 Number: 10
 Number: -10
