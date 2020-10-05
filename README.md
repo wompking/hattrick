@@ -8,8 +8,6 @@ An assignment-based esolang implementing a version of call/cc.
 * [Syntax](https://github.com/wompking/hattrick/blob/main/README.md#syntax)
 * [Expressions and Operators](https://github.com/wompking/hattrick/blob/main/README.md#expressions-and-operators)
 * [Hat Pairs](https://github.com/wompking/hattrick/blob/main/README.md#hat-pairs)
-* [Installing]()
-* [Credits]()
 
 ## Introduction
 Hat Trick is an assignment-based esolang implementing a version of call/cc. It's both easier *and* harder to code things in Hat Trick than in [Tailor](https://github.com/wompking/tailorlang), given that Hat Trick doesn't really have loops. We'll get back to that later. File extensions for Hat Trick programs are `.htrck`, and Hat Trick comments begin with `#`. Hat Trick, unlike Tailor, is not forgiving.
