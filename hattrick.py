@@ -124,7 +124,7 @@ def evalExpression(tree):
 			if strisany(tree):
 				return eval(tree)
 			else:
-				sys.exit(tree+" IS NOT A VALID DATA TYPE")
+				sys.exit("UNKNOWN VARIABLE REFERENCE: "+tree)
 			return tree
 		return tree
 	elif len(tree) == 1:
