@@ -19,7 +19,7 @@ OPERATIONSLENGTH = [int(a) for a in "2 2 2 2 2 2 3 2 2 2  2  1 2  2  1   2      
 programsplit = [b for b in [a for a in program.split("\n") if a] if b[0] is not "#"]
 programgrid = [a.split("=>") for a in programsplit]
 programgrid = [[b.strip() for b in a] for a in programgrid]
-print(programgrid)
+#print(programgrid)
 
 variables = {}
 hat_present = {}
