@@ -115,7 +115,7 @@ def evalExpression(tree):
 		if tree in OPERATIONS:
 			#print("OPS")
 			if tree == "stdin":
-				return input("> ")
+				return input()
 			else:
 				return tree
 		elif tree in variables.keys():
@@ -297,7 +297,7 @@ while pointer < len(programgrid):
 	else:
 		value = evalExpression(parseExpression(line[0]))
 	if line[1] == "stdout":
-		print(value)
+		print(value,end="")
 	elif line[1] == "stdin":
 		sys.exit("CANNOT WRITE TO STDIN")
 	elif len(re.findall(r"^\[[^|]+?\|[^|]+?\]$", line[1])) == 1 and value == None:
