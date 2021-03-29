@@ -3,6 +3,7 @@
 
 import sys
 import re
+import pathlib
 
 if len(sys.argv) < 2:
 	print("Usage: python3 hattrick.py <file>")
@@ -11,7 +12,7 @@ debugging = False
 if len(sys.argv) > 2:
 	debugging = bool(sys.argv[2])
 
-program = open(sys.argv[1]).read();
+program = pathlib.Path(sys.argv[1]).read_text();
 
 OPERATIONS                        = "+ - * / % ^ ? > < == != ! >= <= abs coerce find slice stdin len".split(" ")
 OPERATIONSLENGTH = [int(a) for a in "2 2 2 2 2 2 3 2 2 2  2  1 2  2  1   2      2    3     0     1".split(" ") if a]
